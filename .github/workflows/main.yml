@@ -23,7 +23,7 @@ jobs:
         cd "${{ env.repositoryDir }}"
         Write-Host "Current directory: $(Get-Location)"
         Write-Host "Pulling latest code..."
-        git pull origin main
+        git pull origin master
 
     - name: Build
       shell: powershell
