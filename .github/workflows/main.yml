@@ -7,9 +7,9 @@ on:
 
 env:
   repositoryDir: D:\Clones\NoriaBe
-  projectDir: D:\Clones\NoriaBe\NoriaBE\NoriaBE
+  projectDir: D:\Clones\NoriaBe\NoriaBE
   destinationDir: D:\Websites\NoriaBE
-  publishDir: D:\Clones\NoriaBe\NoriaBE\NoriaBE\bin\Release\net8.0
+  publishDir: D:\Clones\NoriaBe\NoriaBE\bin\Release\net8.0
 
 jobs:
   test-runner:
