@@ -1,0 +1,48 @@
+use Master
+GO
+
+CREATE DATABASE NoriaDB
+GO
+
+USE NoriaDB
+GO
+
+CREATE TABLE Building
+(
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Name NVARCHAR(255) NOT NULL,
+    Address NVARCHAR(255) NOT NULL,
+    Img NVARCHAR(500) NOT NULL,
+    Floors INT NOT NULL,
+    ElectricityPricePerUnit DECIMAL(18, 3) NOT NULL,
+    WaterPricePerUnit DECIMAL(18, 3) NOT NULL
+)
+GO
+
+CREATE TABLE Room
+(
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    BuildingId INT NOT NULL,
+    IsOccupied BIT NOT NULL,
+    PhoneNumber NVARCHAR(20) NOT NULL,
+    Floor INT NOT NULL,
+    Price DECIMAL(18, 3) NOT NULL
+)
+GO
+
+CREATE TABLE Usage
+(
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    RoomId INT NOT NULL,
+    WaterUsage DECIMAL(18, 3) DEFAULT 0,
+    ElectricityUsage DECIMAL(18, 3) DEFAULT 0,
+    WaterPrice DECIMAL(18, 3) DEFAULT 0,
+    ElectricityPrice DECIMAL(18, 3) DEFAULT 0,
+    StartTime DATETIME NOT NULL,
+    EndTime DATETIME NOT NULL,
+    TotalAmmountToPay DECIMAL(18, 3) DEFAULT 0,
+    TotalAmmountPaid DECIMAL(18, 3) DEFAULT 0,
+    IsPaid BIT NOT NULL DEFAULT 0
+)
+GO
+
