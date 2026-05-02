@@ -3,7 +3,7 @@ name: Deploy
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
 
 env:
   repositoryDir: D:\Clones\NoriaBe
