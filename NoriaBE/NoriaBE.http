@@ -1,0 +1,6 @@
+@NoriaBE_HostAddress = http://localhost:5184
+
+GET {{NoriaBE_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
