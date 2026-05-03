@@ -11,7 +11,7 @@ public class NoriaRepository : INoriaRepository
     private readonly string _connectionString;
     public NoriaRepository(IConfiguration configuration)
     {
-        _connectionString = configuration.GetSection("ConnnectionString").Value ?? string.Empty;
+        _connectionString = configuration.GetSection("ConnectionString").Value ?? string.Empty;
     }
 
     protected IEnumerable<T> Query<T>(string spName, object parameters = null, string database = "GameProviderDB", int timeoutTime = 180)
@@ -19,6 +19,13 @@ public class NoriaRepository : INoriaRepository
         var cnnString = _connectionString;
         using var conn = new SqlConnection(cnnString);
         var sql = conn.Query<T>(spName, parameters, null, true, timeoutTime, CommandType.StoredProcedure);
+        return sql;
+    }
+    protected IEnumerable<T> QueryText<T>(string sqlText, object parameters = null, string database = "GameProviderDB", int timeoutTime = 180)
+    {
+        var cnnString = _connectionString;
+        using var conn = new SqlConnection(cnnString);
+        var sql = conn.Query<T>(sqlText, parameters, null, true, timeoutTime, CommandType.Text);
         return sql;
     }
 
@@ -48,8 +55,88 @@ public class NoriaRepository : INoriaRepository
     }
     public List<Building> GetAllBuilding()
     {
-        var sql = "";
-        var result = Query<Building>(sql);
+        var sql = @"select 
+                     Id,
+                     Name,
+                     Address,
+                     Img,
+                     Floors,
+                     ElectricityPricePerUnit,
+                     WaterPricePerUnit
+                    from building ";
+        var result = QueryText<Building>(sql);
         return result.ToList();
+    }
+    public List<Room> GetAllRoom()
+    {
+        var sql = @"select 
+                     Id,
+                     IsOccupied,
+                     PhoneNumber,
+                     Floor,
+                     Price,    
+                     BuildingId
+                    from room ";
+        var result = QueryText<Room>(sql);
+        return result.ToList();
+    }
+
+    public void AddBuilding(Building building)
+    {
+        var sql = @"INSERT INTO building (Name, Address, Img, Floors, ElectricityPricePerUnit, WaterPricePerUnit) 
+                    VALUES (@Name, @Address, @Img, @Floors, @ElectricityPricePerUnit, @WaterPricePerUnit)";
+        var result = QueryText<Building>(sql, new
+        {
+            Name = building.Name,
+            Address = building.Address,
+            Img = building.Img,
+            Floors = building.Floors,
+            ElectricityPricePerUnit = building.ElectricityPricePerUnit,
+            WaterPricePerUnit = building.WaterPricePerUnit
+        });
+    }
+    public void AddRoom(Room room)
+    {
+        var sql = @"INSERT INTO room (BuildingId, IsOccupied, PhoneNumber, Floor, Price) 
+                    VALUES (@BuildingId, @IsOccupied, @PhoneNumber, @Floor, @Price)";
+        var result = QueryText<Room>(sql, new
+        {
+            BuildingId = room.BuildingId,
+            IsOccupied = room.IsOccupied,
+            PhoneNumber = room.PhoneNumber,
+            Floor = room.Floor,
+            Price = room.Price
+        });
+    }
+    public void UpdateRoom(Room room)
+    {
+        var sql = @"UPDATE room 
+                    SET BuildingId = @BuildingId, IsOccupied = @IsOccupied, PhoneNumber = @PhoneNumber, Floor = @Floor, Price = @Price
+                    WHERE Id = @Id";
+        var result = QueryText<Room>(sql, new
+        {
+            Id = room.Id,
+            BuildingId = room.BuildingId,
+            IsOccupied = room.IsOccupied,
+            PhoneNumber = room.PhoneNumber,
+            Floor = room.Floor,
+            Price = room.Price
+        });
+    }
+    public void UpdateBuilding(Building building)
+    {
+        var sql = @"UPDATE building 
+                    SET Name = @Name, Address = @Address, Img = @Img, Floors = @Floors, ElectricityPricePerUnit = @ElectricityPricePerUnit, WaterPricePerUnit = @WaterPricePerUnit
+                    WHERE Id = @Id";
+        var result = QueryText<Building>(sql, new
+        {
+            Id = building.Id,
+            Name = building.Name,
+            Address = building.Address,
+            Img = building.Img,
+            Floors = building.Floors,
+            ElectricityPricePerUnit = building.ElectricityPricePerUnit,
+            WaterPricePerUnit = building.WaterPricePerUnit
+        });
     }
 }

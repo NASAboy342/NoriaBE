@@ -11,4 +11,7 @@ public class Building
 	public int Rooms { get; set; } = 0;
 	public int OccupiedRooms { get; set; } = 0;
 	public int PaidRooms { get; set; } = 0;
+    public int Floors { get; set; }
+    public decimal ElectricityPricePerUnit { get; set; }
+    public decimal WaterPricePerUnit { get; set; }
 }
