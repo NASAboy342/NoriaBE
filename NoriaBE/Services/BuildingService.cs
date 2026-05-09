@@ -58,4 +58,28 @@ public class BuildingService : IBuildingService
         _noriaRepository.UpdateBuilding(existingBuilding);
         
     }
+
+    public void ValidateAddBuildingRequest(Building building)
+    {
+        if (string.IsNullOrEmpty(building.Name))
+        {
+            throw new Exception("Building name is required.");
+        }
+        if (string.IsNullOrEmpty(building.Address))
+        {
+            throw new Exception("Building address is required.");
+        }
+        if (building.Floors <= 0)
+        {
+            throw new Exception("Building floors must be greater than 0.");
+        }
+        if (building.ElectricityPricePerUnit <= 100)
+        {
+            throw new Exception("Building electricity price per unit must be greater than 100 Riels.");
+        }
+        if (building.WaterPricePerUnit <= 100)
+        {
+            throw new Exception("Building water price per unit must be greater than 100 Riels.");
+        }
+    }
 }

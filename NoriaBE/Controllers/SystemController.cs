@@ -37,6 +37,7 @@ public class SystemController : ControllerBase
      [HttpPost("add-building")]
     public IActionResult AddBuilding(Building building)
     {
+        _buildingService.ValidateAddBuildingRequest(building);
         _buildingService.AddBuilding(building);
         return Ok();
     }

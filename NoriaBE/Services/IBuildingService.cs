@@ -9,5 +9,6 @@ public interface IBuildingService
     List<Building> GetAllBuilding();
     void SumRooms(List<Building> buildings, List<Room> rooms);
     void UpdateBuilding(Building building);
+    void ValidateAddBuildingRequest(Building building);
     void ValidateBuildingId(int buildingId);
 }
