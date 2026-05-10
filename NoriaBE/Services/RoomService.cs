@@ -44,4 +44,20 @@ public class RoomService : IRoomService
         existingRoom.Price = room.Price;
         _noriaRepository.UpdateRoom(existingRoom);
     }
+
+    public void ValidateAddRoomRequest(Room room)
+    {
+        if (string.IsNullOrEmpty(room.Name))
+        {
+            throw new Exception("Room name is required.");
+        }
+        if (room.BuildingId <= 0)
+        {
+            throw new Exception("BuildingId must be greater than 0.");
+        }
+        if (room.Floor < 0)
+        {
+            throw new Exception("Floor must be greater than or equal to 0.");
+        }
+    }
 }

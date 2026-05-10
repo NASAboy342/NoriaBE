@@ -44,6 +44,7 @@ public class SystemController : ControllerBase
     [HttpPost("add-room")]
     public IActionResult AddRoom(Room room)
     {
+        _roomService.ValidateAddRoomRequest(room);
         _buildingService.ValidateBuildingId(room.BuildingId);
         _roomService.AddRoom(room);
         return Ok();

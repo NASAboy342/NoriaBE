@@ -8,4 +8,5 @@ public interface IRoomService
     List<Room> GetAllRoom();
     List<Room> GetAllRoomByBuildingId(int buildingId);
     void UpdateRoom(Room room);
+    void ValidateAddRoomRequest(Room room);
 }
