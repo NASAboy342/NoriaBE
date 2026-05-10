@@ -71,6 +71,7 @@ public class NoriaRepository : INoriaRepository
     {
         var sql = @"select 
                      Id,
+                     Name,
                      IsOccupied,
                      PhoneNumber,
                      Floor,
@@ -97,10 +98,11 @@ public class NoriaRepository : INoriaRepository
     }
     public void AddRoom(Room room)
     {
-        var sql = @"INSERT INTO room (BuildingId, IsOccupied, PhoneNumber, Floor, Price) 
-                    VALUES (@BuildingId, @IsOccupied, @PhoneNumber, @Floor, @Price)";
+        var sql = @"INSERT INTO room (Name, BuildingId, IsOccupied, PhoneNumber, Floor, Price) 
+                    VALUES (@Name, @BuildingId, @IsOccupied, @PhoneNumber, @Floor, @Price)";
         var result = QueryText<Room>(sql, new
         {
+            Name = room.Name,
             BuildingId = room.BuildingId,
             IsOccupied = room.IsOccupied,
             PhoneNumber = room.PhoneNumber,
@@ -111,11 +113,12 @@ public class NoriaRepository : INoriaRepository
     public void UpdateRoom(Room room)
     {
         var sql = @"UPDATE room 
-                    SET BuildingId = @BuildingId, IsOccupied = @IsOccupied, PhoneNumber = @PhoneNumber, Floor = @Floor, Price = @Price
+                    SET Name = @Name, BuildingId = @BuildingId, IsOccupied = @IsOccupied, PhoneNumber = @PhoneNumber, Floor = @Floor, Price = @Price
                     WHERE Id = @Id";
         var result = QueryText<Room>(sql, new
         {
             Id = room.Id,
+            Name = room.Name,
             BuildingId = room.BuildingId,
             IsOccupied = room.IsOccupied,
             PhoneNumber = room.PhoneNumber,

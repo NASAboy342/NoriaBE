@@ -22,6 +22,7 @@ GO
 CREATE TABLE Room
 (
     Id INT PRIMARY KEY IDENTITY(1,1),
+    [Name] NVARCHAR(255) NOT NULL,
     BuildingId INT NOT NULL,
     IsOccupied BIT NOT NULL,
     PhoneNumber NVARCHAR(20) NOT NULL,
