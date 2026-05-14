@@ -10,6 +10,7 @@ builder.Services.AddControllers().AddNewtonsoftJson();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGenNewtonsoftSupport();
 builder.Services.AddSingleton<ExceptionFilter>();
 builder.Services.AddSingleton<IBuildingService, BuildingService>();
 builder.Services.AddSingleton<IRoomService, RoomService>();
