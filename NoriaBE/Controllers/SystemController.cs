@@ -13,11 +13,13 @@ public class SystemController : ControllerBase
 {
     private readonly IBuildingService _buildingService;
     private readonly IRoomService _roomService;
+    private readonly IPaymentService _paymentService;
 
-    public SystemController(IBuildingService buildingService, IRoomService roomService)
+    public SystemController(IBuildingService buildingService, IRoomService roomService, IPaymentService paymentService)
     {
         _buildingService = buildingService;
         _roomService = roomService;
+        _paymentService = paymentService;
     }
 
     [HttpGet("get-all-building")]
@@ -61,6 +63,34 @@ public class SystemController : ControllerBase
     public IActionResult UpdateBuilding(Building building)
     {
         _buildingService.UpdateBuilding(building);
+        return Ok();
+    }
+
+    [HttpGet("get-room-payments")]
+    public IActionResult GetRoomPayments(int roomId, DateTime startTime, DateTime endTime)
+    {
+        _roomService.ValidateRoomId(roomId);
+        var payments = _paymentService.GetRoomPayments(roomId, startTime, endTime);
+        return Ok(payments);
+    }
+
+    [HttpPost("create-payment")]
+    public IActionResult CreatePayment(Usage payment)
+    {
+        payment.ValidateRequest();
+        _roomService.ValidateRoomId(payment.RoomId);
+        _paymentService.CreatePayment(payment);
+        return Ok();
+    }
+
+    [HttpPost("do-payment")]
+    public IActionResult DoPayment(Usage payment)
+    {
+        payment.ValidateRequest();
+        _roomService.ValidateRoomId(payment.RoomId);
+        var targetPayment = _paymentService.GetRoomPaymentsById(payment.Id);
+        _paymentService.DoPayment(targetPayment, payment);
+        _paymentService.Update(targetPayment);
         return Ok();
     }
 }

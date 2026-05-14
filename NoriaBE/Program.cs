@@ -14,6 +14,7 @@ builder.Services.AddSingleton<ExceptionFilter>();
 builder.Services.AddSingleton<IBuildingService, BuildingService>();
 builder.Services.AddSingleton<IRoomService, RoomService>();
 builder.Services.AddSingleton<INoriaRepository, NoriaRepository>();
+builder.Services.AddSingleton<IPaymentService, PaymentService>();
 
 builder.Services.AddCors(options =>
 {

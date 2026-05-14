@@ -63,7 +63,7 @@ public class NoriaRepository : INoriaRepository
                      Floors,
                      ElectricityPricePerUnit,
                      WaterPricePerUnit
-                    from building ";
+                    from building WITH (NOLOCK)";
         var result = QueryText<Building>(sql);
         return result.ToList();
     }
@@ -77,7 +77,7 @@ public class NoriaRepository : INoriaRepository
                      Floor,
                      Price,    
                      BuildingId
-                    from room ";
+                    from room WITH (NOLOCK)";
         var result = QueryText<Room>(sql);
         return result.ToList();
     }
@@ -140,6 +140,96 @@ public class NoriaRepository : INoriaRepository
             Floors = building.Floors,
             ElectricityPricePerUnit = building.ElectricityPricePerUnit,
             WaterPricePerUnit = building.WaterPricePerUnit
+        });
+    }
+
+    public List<Usage> GetRoomPayments(int roomId, DateTime startTime, DateTime endTime)
+    {
+        var sql = @"SELECT
+                        Id,
+                        RoomId,
+                        WaterUsage,
+                        ElectricityUsage,
+                        WaterPrice,
+                        ElectricityPrice,
+                        StartTime,
+                        EndTime,
+                        TotalAmmountToPay,
+                        TotalAmmountPaid,
+                        IsPaid
+                    FROM Usage WITH (NOLOCK)
+                    WHERE RoomId = @RoomId
+                      AND StartTime >= @StartTime
+                      AND EndTime <= @EndTime";
+        var result = QueryText<Usage>(sql, new
+        {
+            RoomId = roomId,
+            StartTime = startTime,
+            EndTime = endTime
+        });
+        return result.ToList();
+    }
+
+    public void CreatePayment(Usage payment)
+    {
+        var sql = @"INSERT INTO Usage (RoomId, WaterUsage, ElectricityUsage, WaterPrice, ElectricityPrice, StartTime, EndTime, TotalAmmountToPay, TotalAmmountPaid, IsPaid) 
+                    VALUES (@RoomId, @WaterUsage, @ElectricityUsage, @WaterPrice, @ElectricityPrice, @StartTime, @EndTime, @TotalAmmountToPay, @TotalAmmountPaid, @IsPaid)";
+        var result = QueryText<Usage>(sql, new
+        {
+            RoomId = payment.RoomId,
+            WaterUsage = payment.WaterUsage,
+            ElectricityUsage = payment.ElectricityUsage,
+            WaterPrice = payment.WaterPrice,
+            ElectricityPrice = payment.ElectricityPrice,
+            StartTime = payment.StartTime,
+            EndTime = payment.EndTime,
+            TotalAmmountToPay = payment.TotalAmmountToPay,
+            TotalAmmountPaid = payment.TotalAmmountPaid,
+            IsPaid = payment.IsPaid
+        });
+    }
+
+    public Usage GetRoomPaymentsById(int id)
+    {
+        var sql = @"SELECT
+                        Id,
+                        RoomId,
+                        WaterUsage,
+                        ElectricityUsage,
+                        WaterPrice,
+                        ElectricityPrice,
+                        StartTime,
+                        EndTime,
+                        TotalAmmountToPay,
+                        TotalAmmountPaid,
+                        IsPaid
+                    FROM Usage WITH (NOLOCK)
+                    WHERE Id = @Id";
+        var result = QueryText<Usage>(sql, new
+        {
+            Id = id
+        });
+        return result.FirstOrDefault();
+    }
+
+    public void UpdatePayment(Usage updatedPayment)
+    {
+        var sql = @"UPDATE Usage 
+                    SET RoomId = @RoomId, WaterUsage = @WaterUsage, ElectricityUsage = @ElectricityUsage, WaterPrice = @WaterPrice, ElectricityPrice = @ElectricityPrice, StartTime = @StartTime, EndTime = @EndTime, TotalAmmountToPay = @TotalAmmountToPay, TotalAmmountPaid = @TotalAmmountPaid, IsPaid = @IsPaid
+                    WHERE Id = @Id";
+        var result = QueryText<Usage>(sql, new
+        {
+            Id = updatedPayment.Id,
+            RoomId = updatedPayment.RoomId,
+            WaterUsage = updatedPayment.WaterUsage,
+            ElectricityUsage = updatedPayment.ElectricityUsage,
+            WaterPrice = updatedPayment.WaterPrice,
+            ElectricityPrice = updatedPayment.ElectricityPrice,
+            StartTime = updatedPayment.StartTime,
+            EndTime = updatedPayment.EndTime,
+            TotalAmmountToPay = updatedPayment.TotalAmmountToPay,
+            TotalAmmountPaid = updatedPayment.TotalAmmountPaid,
+            IsPaid = updatedPayment.IsPaid
         });
     }
 }

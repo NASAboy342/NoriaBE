@@ -60,4 +60,13 @@ public class RoomService : IRoomService
             throw new Exception("Floor must be greater than or equal to 0.");
         }
     }
+
+    public void ValidateRoomId(int roomId)
+    {
+        var rooms = _noriaRepository.GetAllRoom();
+        if (!rooms.Any(r => r.Id == roomId))
+        {
+            throw new Exception($"Room with Id {roomId} does not exist.");
+        }
+    }
 }
