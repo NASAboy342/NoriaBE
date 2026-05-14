@@ -21,6 +21,7 @@ public class PaymentService : IPaymentService
     {
         targetPayment.TotalAmmountPaid = payment.TotalAmmountPaid;
         targetPayment.IsPaid = payment.TotalAmmountPaid >= targetPayment.TotalAmmountToPay;
+        targetPayment.PaidOn = DateTime.Now;
     }
 
     public List<Usage> GetRoomPayments(int roomId, DateTime startTime, DateTime endTime)

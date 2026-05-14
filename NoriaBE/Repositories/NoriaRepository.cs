@@ -156,7 +156,10 @@ public class NoriaRepository : INoriaRepository
                         EndTime,
                         TotalAmmountToPay,
                         TotalAmmountPaid,
-                        IsPaid
+                        IsPaid,
+                        CreatedOn,
+                        UpdatedOn,
+                        PaidOn
                     FROM Usage WITH (NOLOCK)
                     WHERE RoomId = @RoomId
                       AND StartTime >= @StartTime
@@ -172,8 +175,8 @@ public class NoriaRepository : INoriaRepository
 
     public void CreatePayment(Usage payment)
     {
-        var sql = @"INSERT INTO Usage (RoomId, WaterUsage, ElectricityUsage, WaterPrice, ElectricityPrice, StartTime, EndTime, TotalAmmountToPay, TotalAmmountPaid, IsPaid) 
-                    VALUES (@RoomId, @WaterUsage, @ElectricityUsage, @WaterPrice, @ElectricityPrice, @StartTime, @EndTime, @TotalAmmountToPay, @TotalAmmountPaid, @IsPaid)";
+        var sql = @"INSERT INTO Usage (RoomId, WaterUsage, ElectricityUsage, WaterPrice, ElectricityPrice, StartTime, EndTime, TotalAmmountToPay, TotalAmmountPaid, IsPaid, CreatedOn, UpdatedOn, PaidOn) 
+                    VALUES (@RoomId, @WaterUsage, @ElectricityUsage, @WaterPrice, @ElectricityPrice, @StartTime, @EndTime, @TotalAmmountToPay, @TotalAmmountPaid, @IsPaid, @CreatedOn, @UpdatedOn, @PaidOn)";
         var result = QueryText<Usage>(sql, new
         {
             RoomId = payment.RoomId,
@@ -185,7 +188,10 @@ public class NoriaRepository : INoriaRepository
             EndTime = payment.EndTime,
             TotalAmmountToPay = payment.TotalAmmountToPay,
             TotalAmmountPaid = payment.TotalAmmountPaid,
-            IsPaid = payment.IsPaid
+            IsPaid = payment.IsPaid,
+            CreatedOn = payment.CreatedOn,
+            UpdatedOn = payment.UpdatedOn,
+            PaidOn = payment.PaidOn
         });
     }
 
@@ -202,7 +208,10 @@ public class NoriaRepository : INoriaRepository
                         EndTime,
                         TotalAmmountToPay,
                         TotalAmmountPaid,
-                        IsPaid
+                        IsPaid,
+                        CreatedOn,
+                        UpdatedOn,
+                        PaidOn
                     FROM Usage WITH (NOLOCK)
                     WHERE Id = @Id";
         var result = QueryText<Usage>(sql, new
@@ -215,7 +224,7 @@ public class NoriaRepository : INoriaRepository
     public void UpdatePayment(Usage updatedPayment)
     {
         var sql = @"UPDATE Usage 
-                    SET RoomId = @RoomId, WaterUsage = @WaterUsage, ElectricityUsage = @ElectricityUsage, WaterPrice = @WaterPrice, ElectricityPrice = @ElectricityPrice, StartTime = @StartTime, EndTime = @EndTime, TotalAmmountToPay = @TotalAmmountToPay, TotalAmmountPaid = @TotalAmmountPaid, IsPaid = @IsPaid
+                    SET RoomId = @RoomId, WaterUsage = @WaterUsage, ElectricityUsage = @ElectricityUsage, WaterPrice = @WaterPrice, ElectricityPrice = @ElectricityPrice, StartTime = @StartTime, EndTime = @EndTime, TotalAmmountToPay = @TotalAmmountToPay, TotalAmmountPaid = @TotalAmmountPaid, IsPaid = @IsPaid, UpdatedOn = @UpdatedOn, PaidOn = @PaidOn
                     WHERE Id = @Id";
         var result = QueryText<Usage>(sql, new
         {
@@ -229,7 +238,9 @@ public class NoriaRepository : INoriaRepository
             EndTime = updatedPayment.EndTime,
             TotalAmmountToPay = updatedPayment.TotalAmmountToPay,
             TotalAmmountPaid = updatedPayment.TotalAmmountPaid,
-            IsPaid = updatedPayment.IsPaid
+            IsPaid = updatedPayment.IsPaid,
+            UpdatedOn = DateTime.Now,
+            PaidOn = updatedPayment.PaidOn
         });
     }
 }

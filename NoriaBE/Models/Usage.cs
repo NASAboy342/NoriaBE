@@ -15,6 +15,9 @@ public class Usage
     public decimal TotalAmmountToPay { get; set; }
     public decimal TotalAmmountPaid { get; set; }
     public bool IsPaid { get; set; }
+    public DateTime CreatedOn { get; set; }
+    public DateTime UpdatedOn { get; set; }
+    public DateTime PaidOn { get; set; }
 
     public void ValidateRequest()
     {
