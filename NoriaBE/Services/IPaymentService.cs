@@ -8,6 +8,7 @@ public interface IPaymentService
     void CreatePayment(Usage payment);
     void DoPayment(Usage targetPayment, Usage payment);
     List<Usage> GetRoomPayments(int roomId, DateTime startTime, DateTime endTime);
+    List<Usage> GetRoomPayments(int roomId, int lastN);
     Usage GetRoomPaymentsById(int id);
     void Update(Usage updatedPayment);
 }

@@ -29,6 +29,11 @@ public class PaymentService : IPaymentService
         return _repository.GetRoomPayments(roomId, startTime, endTime);
     }
 
+    public List<Usage> GetRoomPayments(int roomId, int lastN)
+    {
+        return _repository.GetRoomPayments(roomId, lastN);
+    }
+
     public Usage GetRoomPaymentsById(int id)
     {
         return _repository.GetRoomPaymentsById(id);

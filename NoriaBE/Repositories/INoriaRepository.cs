@@ -11,6 +11,7 @@ public interface INoriaRepository
     List<Building> GetAllBuilding();
     List<Room> GetAllRoom();
     List<Usage> GetRoomPayments(int roomId, DateTime startTime, DateTime endTime);
+    List<Usage> GetRoomPayments(int roomId, int lastN);
     Usage GetRoomPaymentsById(int id);
     void UpdateBuilding(Building existingBuilding);
     void UpdatePayment(Usage updatedPayment);

@@ -243,4 +243,32 @@ public class NoriaRepository : INoriaRepository
             PaidOn = updatedPayment.PaidOn
         });
     }
+
+    public List<Usage> GetRoomPayments(int roomId, int lastN)
+    {
+        var sql = @"SELECT TOP (@LastN)
+                        Id,
+                        RoomId,
+                        WaterUsage,
+                        ElectricityUsage,
+                        WaterPrice,
+                        ElectricityPrice,
+                        StartTime,
+                        EndTime,
+                        TotalAmmountToPay,
+                        TotalAmmountPaid,
+                        IsPaid,
+                        CreatedOn,
+                        UpdatedOn,
+                        PaidOn
+                    FROM Usage WITH (NOLOCK)
+                    WHERE RoomId = @RoomId
+                    ORDER BY CreatedOn DESC";
+        var result = QueryText<Usage>(sql, new
+        {
+            RoomId = roomId,
+            LastN = lastN
+        });
+        return result.ToList();
+    }
 }

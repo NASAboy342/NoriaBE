@@ -67,10 +67,10 @@ public class SystemController : ControllerBase
     }
 
     [HttpGet("get-room-payments")]
-    public IActionResult GetRoomPayments(int roomId, DateTime startTime, DateTime endTime)
+    public IActionResult GetRoomPayments(int roomId, int lastN)
     {
         _roomService.ValidateRoomId(roomId);
-        var payments = _paymentService.GetRoomPayments(roomId, startTime, endTime);
+        var payments = _paymentService.GetRoomPayments(roomId, lastN);
         return Ok(payments);
     }
 
