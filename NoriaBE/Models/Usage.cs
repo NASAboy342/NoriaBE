@@ -1,4 +1,5 @@
 using System;
+using Newtonsoft.Json;
 
 namespace NoriaBE.Models;
 
@@ -12,8 +13,8 @@ public class Usage
     public decimal ElectricityPrice { get; set; }
     public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }
-    public decimal TotalAmmountToPay { get; set; }
-    public decimal TotalAmmountPaid { get; set; }
+    [JsonProperty("totalAmountToPay")] public decimal TotalAmmountToPay { get; set; }
+    [JsonProperty("totalAmountPaid")] public decimal TotalAmmountPaid { get; set; }
     public bool IsPaid { get; set; }
     public DateTime CreatedOn { get; set; }
     public DateTime UpdatedOn { get; set; }

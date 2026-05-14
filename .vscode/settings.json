@@ -1,3 +1,6 @@
 {
-    "dotnet.defaultSolution": "NoriaBE.sln"
+    "dotnet.defaultSolution": "NoriaBE.sln",
+    "cSpell.words": [
+        "Newtonsoft"
+    ]
 }
