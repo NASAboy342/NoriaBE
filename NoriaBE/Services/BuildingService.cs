@@ -55,6 +55,7 @@ public class BuildingService : IBuildingService
         existingBuilding.Floors = building.Floors;
         existingBuilding.ElectricityPricePerUnit = building.ElectricityPricePerUnit;
         existingBuilding.WaterPricePerUnit = building.WaterPricePerUnit;
+        existingBuilding.KHRToUSDExchangeRate = building.KHRToUSDExchangeRate;
         _noriaRepository.UpdateBuilding(existingBuilding);
         
     }
