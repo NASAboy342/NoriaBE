@@ -21,9 +21,9 @@ public class LogFilter : ActionFilterAttribute
                          || HttpMethods.IsPut(request.Method)
                          || HttpMethods.IsPatch(request.Method);
 
-        if (methodHasBody && request.Body.CanRead)
+        if (methodHasBody && request.Body.CanSeek)
         {
-            request.EnableBuffering();
+            request.Body.Position = 0;
             using var reader = new StreamReader(request.Body, leaveOpen: true);
             body = await reader.ReadToEndAsync();
             request.Body.Position = 0;

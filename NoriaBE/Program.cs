@@ -45,6 +45,13 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// Enable request body buffering before model binding reads the stream
+app.Use(async (context, next) =>
+{
+    context.Request.EnableBuffering();
+    await next();
+});
+
 // Configure the HTTP request pipeline.
 // (app.Environment.IsDevelopment())
 
