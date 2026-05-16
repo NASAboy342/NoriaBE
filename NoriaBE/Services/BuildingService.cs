@@ -46,6 +46,7 @@ public class BuildingService : IBuildingService
 
     public void UpdateBuilding(Building building)
     {
+        _loggerService.Info($"building data update request: {JsonConvert.SerializeObject(building)}");
         var buildings = _noriaRepository.GetAllBuilding();
         var existingBuilding = buildings.FirstOrDefault(b => b.Id == building.Id);
         if (existingBuilding == null)
