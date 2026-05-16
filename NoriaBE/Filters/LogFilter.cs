@@ -17,7 +17,11 @@ public class LogFilter : ActionFilterAttribute
         var request = context.HttpContext.Request;
 
         string body = string.Empty;
-        if (request.ContentLength > 0 && request.Body.CanRead)
+        var methodHasBody = HttpMethods.IsPost(request.Method)
+                         || HttpMethods.IsPut(request.Method)
+                         || HttpMethods.IsPatch(request.Method);
+
+        if (methodHasBody && request.Body.CanRead)
         {
             request.EnableBuffering();
             using var reader = new StreamReader(request.Body, leaveOpen: true);
