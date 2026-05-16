@@ -16,7 +16,7 @@ CREATE TABLE Building
     Floors INT NOT NULL,
     ElectricityPricePerUnit DECIMAL(18, 3) NOT NULL,
     WaterPricePerUnit DECIMAL(18, 3) NOT NULL,
-    KHRToUSDExchangeRate DECIMAL(18, 3) NOT NULL
+    KHRToUSDExchangeRate DECIMAL(18, 3) DEFAULT 0
 )
 GO
 
