@@ -17,12 +17,16 @@ builder.Host.UseNLog();
 
 // Add services to the container.
 
-builder.Services.AddControllers().AddNewtonsoftJson();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.AddService<LogFilter>();
+}).AddNewtonsoftJson();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGenNewtonsoftSupport();
 builder.Services.AddSingleton<ExceptionFilter>();
+builder.Services.AddSingleton<LogFilter>();
 builder.Services.AddSingleton<IBuildingService, BuildingService>();
 builder.Services.AddSingleton<IRoomService, RoomService>();
 builder.Services.AddSingleton<INoriaRepository, NoriaRepository>();
