@@ -1,8 +1,19 @@
+using NLog;
+using NLog.Web;
 using NoriaBE.Filters;
 using NoriaBE.Repositories;
 using NoriaBE.Services;
 
+var logger = LogManager.Setup()
+    .LoadConfigurationFromFile("nlog.config")
+    .GetCurrentClassLogger();
+
+try
+{
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Logging.ClearProviders();
+builder.Host.UseNLog();
 
 // Add services to the container.
 
@@ -16,6 +27,7 @@ builder.Services.AddSingleton<IBuildingService, BuildingService>();
 builder.Services.AddSingleton<IRoomService, RoomService>();
 builder.Services.AddSingleton<INoriaRepository, NoriaRepository>();
 builder.Services.AddSingleton<IPaymentService, PaymentService>();
+builder.Services.AddSingleton<ILoggerService, LoggerService>();
 
 builder.Services.AddCors(options =>
 {
@@ -44,3 +56,14 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+}
+catch (Exception ex)
+{
+    logger.Error(ex, "Application stopped due to an unhandled exception.");
+    throw;
+}
+finally
+{
+    LogManager.Shutdown();
+}
