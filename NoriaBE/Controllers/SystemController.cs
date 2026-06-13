@@ -88,8 +88,8 @@ public class SystemController : ControllerBase
     {
         payment.ValidateRequest();
         _roomService.ValidateRoomId(payment.RoomId);
-        var targetPayment = _paymentService.GetRoomPaymentsById(payment.Id);
-        _paymentService.Update(targetPayment);
+        _paymentService.GetRoomPaymentsById(payment.Id);
+        _paymentService.Update(payment);
         return Ok();
     }
 
@@ -100,8 +100,9 @@ public class SystemController : ControllerBase
     {
         payment.ValidateRequest();
         _roomService.ValidateRoomId(payment.RoomId);
-        _paymentService.GetRoomPaymentsById(payment.Id);
-        _paymentService.Update(payment);
+        var targetPayment = _paymentService.GetRoomPaymentsById(payment.Id);
+        _paymentService.DoPayment(targetPayment, payment);
+        _paymentService.Update(targetPayment);
         return Ok();
     }
 
