@@ -41,6 +41,7 @@ CREATE TABLE Usage
     ElectricityPrice DECIMAL(18, 3) DEFAULT 0,
     StartTime DATETIME NOT NULL,
     EndTime DATETIME NOT NULL,
+    AdjustmentAmount DECIMAL(18, 3) DEFAULT 0,
     TotalAmmountToPay DECIMAL(18, 3) DEFAULT 0,
     TotalAmmountPaid DECIMAL(18, 3) DEFAULT 0,
     IsPaid BIT NOT NULL DEFAULT 0,

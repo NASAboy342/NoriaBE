@@ -11,6 +11,7 @@ public class Usage
     public decimal ElectricityUsage { get; set; }
     public decimal WaterPrice { get; set; }
     public decimal ElectricityPrice { get; set; }
+    public decimal AdjustmentAmount { get; set; }
     public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }
     [JsonProperty("totalAmountToPay")] public decimal TotalAmmountToPay { get; set; }
