@@ -93,4 +93,11 @@ public class SystemController : ControllerBase
         _paymentService.Update(targetPayment);
         return Ok();
     }
+
+    [HttpGet("get-room-payments-by-id")]   
+     public IActionResult GetRoomPaymentsById(int paymentId)
+    {
+        var payment = _paymentService.GetRoomPaymentsById(paymentId);
+        return Ok(payment);
+    }
 }

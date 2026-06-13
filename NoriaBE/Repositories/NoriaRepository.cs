@@ -62,7 +62,8 @@ public class NoriaRepository : INoriaRepository
                      Img,
                      Floors,
                      ElectricityPricePerUnit,
-                     WaterPricePerUnit
+                     WaterPricePerUnit,
+                     KHRToUSDExchangeRate
                     from building WITH (NOLOCK)";
         var result = QueryText<Building>(sql);
         return result.ToList();
@@ -84,8 +85,8 @@ public class NoriaRepository : INoriaRepository
 
     public void AddBuilding(Building building)
     {
-        var sql = @"INSERT INTO building (Name, Address, Img, Floors, ElectricityPricePerUnit, WaterPricePerUnit) 
-                    VALUES (@Name, @Address, @Img, @Floors, @ElectricityPricePerUnit, @WaterPricePerUnit)";
+        var sql = @"INSERT INTO building (Name, Address, Img, Floors, ElectricityPricePerUnit, WaterPricePerUnit, KHRToUSDExchangeRate) 
+                    VALUES (@Name, @Address, @Img, @Floors, @ElectricityPricePerUnit, @WaterPricePerUnit, @KHRToUSDExchangeRate)";
         var result = QueryText<Building>(sql, new
         {
             Name = building.Name,
@@ -93,7 +94,8 @@ public class NoriaRepository : INoriaRepository
             Img = building.Img,
             Floors = building.Floors,
             ElectricityPricePerUnit = building.ElectricityPricePerUnit,
-            WaterPricePerUnit = building.WaterPricePerUnit
+            WaterPricePerUnit = building.WaterPricePerUnit,
+            KHRToUSDExchangeRate = building.KHRToUSDExchangeRate
         });
     }
     public void AddRoom(Room room)
@@ -129,7 +131,7 @@ public class NoriaRepository : INoriaRepository
     public void UpdateBuilding(Building building)
     {
         var sql = @"UPDATE building 
-                    SET Name = @Name, Address = @Address, Img = @Img, Floors = @Floors, ElectricityPricePerUnit = @ElectricityPricePerUnit, WaterPricePerUnit = @WaterPricePerUnit
+                    SET Name = @Name, Address = @Address, Img = @Img, Floors = @Floors, ElectricityPricePerUnit = @ElectricityPricePerUnit, WaterPricePerUnit = @WaterPricePerUnit, KHRToUSDExchangeRate = @KHRToUSDExchangeRate
                     WHERE Id = @Id";
         var result = QueryText<Building>(sql, new
         {
@@ -139,7 +141,8 @@ public class NoriaRepository : INoriaRepository
             Img = building.Img,
             Floors = building.Floors,
             ElectricityPricePerUnit = building.ElectricityPricePerUnit,
-            WaterPricePerUnit = building.WaterPricePerUnit
+            WaterPricePerUnit = building.WaterPricePerUnit,
+            KHRToUSDExchangeRate = building.KHRToUSDExchangeRate
         });
     }
 

@@ -14,4 +14,5 @@ public class Building
     public int Floors { get; set; }
     public decimal ElectricityPricePerUnit { get; set; }
     public decimal WaterPricePerUnit { get; set; }
+	public decimal KHRToUSDExchangeRate { get; set; }
 }

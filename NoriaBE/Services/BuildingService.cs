@@ -1,4 +1,5 @@
 using System;
+using Newtonsoft.Json;
 using NoriaBE.Models;
 using NoriaBE.Repositories;
 
@@ -7,9 +8,11 @@ namespace NoriaBE.Services;
 public class BuildingService : IBuildingService
 {
     private readonly INoriaRepository _noriaRepository;
-    public BuildingService(INoriaRepository noriaRepository)
+    private readonly ILoggerService _loggerService;
+    public BuildingService(INoriaRepository noriaRepository, ILoggerService loggerService)
     {
         _noriaRepository = noriaRepository;
+        _loggerService = loggerService;
     }
     public List<Building> GetAllBuilding()
     {
@@ -43,18 +46,22 @@ public class BuildingService : IBuildingService
 
     public void UpdateBuilding(Building building)
     {
+        _loggerService.Info($"building data update request: {JsonConvert.SerializeObject(building)}");
         var buildings = _noriaRepository.GetAllBuilding();
         var existingBuilding = buildings.FirstOrDefault(b => b.Id == building.Id);
         if (existingBuilding == null)
         {
             throw new Exception($"Building with Id {building.Id} does not exist.");
         }
+        _loggerService.Info($"building data before update: {JsonConvert.SerializeObject(existingBuilding)}");
         existingBuilding.Name = building.Name;
         existingBuilding.Address = building.Address;
         existingBuilding.Img = building.Img;
         existingBuilding.Floors = building.Floors;
         existingBuilding.ElectricityPricePerUnit = building.ElectricityPricePerUnit;
         existingBuilding.WaterPricePerUnit = building.WaterPricePerUnit;
+        existingBuilding.KHRToUSDExchangeRate = building.KHRToUSDExchangeRate;
+        _loggerService.Info($"building data update: {JsonConvert.SerializeObject(existingBuilding)}");
         _noriaRepository.UpdateBuilding(existingBuilding);
         
     }
