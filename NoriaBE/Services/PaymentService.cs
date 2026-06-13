@@ -36,7 +36,12 @@ public class PaymentService : IPaymentService
 
     public Usage GetRoomPaymentsById(int id)
     {
-        return _repository.GetRoomPaymentsById(id);
+        var payment = _repository.GetRoomPaymentsById(id);
+        if (payment == null)
+        {
+            throw new Exception($"Payment with id {id} not found.");
+        }
+        return payment;
     }
 
     public void Update(Usage updatedPayment)

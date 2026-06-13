@@ -83,14 +83,25 @@ public class SystemController : ControllerBase
         return Ok();
     }
 
+    [HttpPost("update-payment")]
+    public IActionResult UpdatePayment(Usage payment)
+    {
+        payment.ValidateRequest();
+        _roomService.ValidateRoomId(payment.RoomId);
+        var targetPayment = _paymentService.GetRoomPaymentsById(payment.Id);
+        _paymentService.Update(targetPayment);
+        return Ok();
+    }
+
+
+
     [HttpPost("do-payment")]
     public IActionResult DoPayment(Usage payment)
     {
         payment.ValidateRequest();
         _roomService.ValidateRoomId(payment.RoomId);
-        var targetPayment = _paymentService.GetRoomPaymentsById(payment.Id);
-        _paymentService.DoPayment(targetPayment, payment);
-        _paymentService.Update(targetPayment);
+        _paymentService.GetRoomPaymentsById(payment.Id);
+        _paymentService.Update(payment);
         return Ok();
     }
 
