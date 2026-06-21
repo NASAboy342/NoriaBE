@@ -77,7 +77,9 @@ public class NoriaRepository : INoriaRepository
                      PhoneNumber,
                      Floor,
                      Price,    
-                     BuildingId
+                     BuildingId,
+                     Deposit,
+                     RequiredDepositAmount
                     from room WITH (NOLOCK)";
         var result = QueryText<Room>(sql);
         return result.ToList();
