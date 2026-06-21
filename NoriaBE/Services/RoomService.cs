@@ -30,7 +30,6 @@ public class RoomService : IRoomService
 
     public void UpdateRoom(Room room)
     {
-
         var rooms = _noriaRepository.GetAllRoom();
         var existingRoom = rooms.FirstOrDefault(r => r.Id == room.Id);
         if (existingRoom == null)
@@ -42,6 +41,8 @@ public class RoomService : IRoomService
         existingRoom.PhoneNumber = room.PhoneNumber;
         existingRoom.Floor = room.Floor;
         existingRoom.Price = room.Price;
+        existingRoom.Deposit = room.Deposit;
+        existingRoom.RequiredDepositAmount = room.RequiredDepositAmount;
         _noriaRepository.UpdateRoom(existingRoom);
     }
 

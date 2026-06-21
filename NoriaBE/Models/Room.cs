@@ -11,4 +11,6 @@ public class Room
     public string PhoneNumber { get; set; } = string.Empty;
     public int Floor { get; set; }
     public decimal Price { get; set; }
+    public decimal Deposit { get; set; } = 0;
+    public decimal RequiredDepositAmount { get; set; } = 0;
 }

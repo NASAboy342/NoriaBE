@@ -54,7 +54,6 @@ public class SystemController : ControllerBase
     [HttpPost("update-room")]
     public IActionResult UpdateRoom(Room room)
     {
-
         _buildingService.ValidateBuildingId(room.BuildingId);
         _roomService.UpdateRoom(room);
         return Ok();

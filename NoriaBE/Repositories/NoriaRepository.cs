@@ -100,8 +100,8 @@ public class NoriaRepository : INoriaRepository
     }
     public void AddRoom(Room room)
     {
-        var sql = @"INSERT INTO room (Name, BuildingId, IsOccupied, PhoneNumber, Floor, Price) 
-                    VALUES (@Name, @BuildingId, @IsOccupied, @PhoneNumber, @Floor, @Price)";
+        var sql = @"INSERT INTO room (Name, BuildingId, IsOccupied, PhoneNumber, Floor, Price, Deposit, RequiredDepositAmount) 
+                    VALUES (@Name, @BuildingId, @IsOccupied, @PhoneNumber, @Floor, @Price, @Deposit, @RequiredDepositAmount)";
         var result = QueryText<Room>(sql, new
         {
             Name = room.Name,
@@ -109,13 +109,15 @@ public class NoriaRepository : INoriaRepository
             IsOccupied = room.IsOccupied,
             PhoneNumber = room.PhoneNumber,
             Floor = room.Floor,
-            Price = room.Price
+            Price = room.Price,
+            Deposit = room.Deposit,
+            RequiredDepositAmount = room.RequiredDepositAmount
         });
     }
     public void UpdateRoom(Room room)
     {
         var sql = @"UPDATE room 
-                    SET Name = @Name, BuildingId = @BuildingId, IsOccupied = @IsOccupied, PhoneNumber = @PhoneNumber, Floor = @Floor, Price = @Price
+                    SET Name = @Name, BuildingId = @BuildingId, IsOccupied = @IsOccupied, PhoneNumber = @PhoneNumber, Floor = @Floor, Price = @Price, Deposit = @Deposit, RequiredDepositAmount = @RequiredDepositAmount
                     WHERE Id = @Id";
         var result = QueryText<Room>(sql, new
         {
@@ -125,7 +127,9 @@ public class NoriaRepository : INoriaRepository
             IsOccupied = room.IsOccupied,
             PhoneNumber = room.PhoneNumber,
             Floor = room.Floor,
-            Price = room.Price
+            Price = room.Price,
+            Deposit = room.Deposit,
+            RequiredDepositAmount = room.RequiredDepositAmount
         });
     }
     public void UpdateBuilding(Building building)

@@ -28,7 +28,9 @@ CREATE TABLE Room
     IsOccupied BIT NOT NULL,
     PhoneNumber NVARCHAR(20) NOT NULL,
     Floor INT NOT NULL,
-    Price DECIMAL(18, 3) NOT NULL
+    Price DECIMAL(18, 3) NOT NULL,
+    Deposit DECIMAL(18, 3) DEFAULT 0,
+    RequiredDepositAmount DECIMAL(18, 3) DEFAULT 0
 )
 GO
 
